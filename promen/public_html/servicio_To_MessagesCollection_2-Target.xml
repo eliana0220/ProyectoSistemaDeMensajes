@@ -1,0 +1,8 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<top:MessagesCollection xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/DBWriteMje">
+   <top:Messages>
+      <top:de>de2</top:de>
+      <top:para>para3</top:para>
+      <top:tipo>whatsapp</top:tipo>
+   </top:Messages>
+</top:MessagesCollection>

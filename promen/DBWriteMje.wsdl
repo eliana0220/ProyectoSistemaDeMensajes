@@ -1,0 +1,21 @@
+<?binding.jca DBWriteMje_db.jca?>
+<wsdl:definitions name="DBWriteMje" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ApplicationPrueba/promen/DBWriteMje" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ApplicationPrueba/promen/DBWriteMje" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/DBWriteMje">
+    <plt:partnerLinkType name="DBWriteMje_plt">
+        <plt:role name="DBWriteMje_role">
+            <plt:portType name="tns:DBWriteMje_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/DBWriteMje" schemaLocation="xsd/DBWriteMje_table.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="MessagesCollection_msg">
+        <wsdl:part name="MessagesCollection" element="top:MessagesCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="DBWriteMje_ptt">
+        <wsdl:operation name="insert">
+            <wsdl:input message="tns:MessagesCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

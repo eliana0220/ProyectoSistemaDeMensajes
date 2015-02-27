@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<servicio xmlns="http://www.everis.com/esquemas">
+   <tipo>whatsapp</tipo>
+   <de>de2</de>
+   <para>para3</para>
+   <mensaje>mensaje4</mensaje>
+</servicio>

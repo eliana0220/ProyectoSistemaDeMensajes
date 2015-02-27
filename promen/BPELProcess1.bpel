@@ -1,0 +1,110 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Feb 27 14:54:44 ART 2015
+  Author:  eliavera
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="BPELProcess1"
+               targetNamespace="http://xmlns.oracle.com/ApplicationPrueba/promen/BPELProcess1"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/ApplicationPrueba/promen/BPELProcess1"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://xmlns.oracle.com/pcbpel/adapter/file/ApplicationPrueba/promen/FAMje"
+         xmlns:ns2="http://xmlns.oracle.com/pcbpel/adapter/db/ApplicationPrueba/promen/DBWriteMje"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:ns3="http://www.everis.com/esquemas"
+         xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/top/DBWriteMje"
+         xmlns:ns5="http://TargetNamespace.com/ServiceName">
+
+  <import namespace="http://xmlns.oracle.com/ApplicationPrueba/promen/BPELProcess1" location="BPELProcess1.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="bpelprocess1_client" partnerLinkType="client:BPELProcess1" myRole="BPELProcess1Provider"/>
+    <partnerLink name="FAMje" partnerLinkType="ns1:Write_plt"
+                 partnerRole="Write_role"/>
+    <partnerLink name="DBWriteMje" partnerLinkType="ns2:DBWriteMje_plt"
+                 partnerRole="DBWriteMje_role"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:BPELProcess1RequestMessage"/>
+    <variable name="Invoke1_insert_DBAdapter"
+              messageType="ns2:MessagesCollection_msg"/>
+    <variable name="Invoke2_Write_FAAdapter" messageType="ns1:Write_msg"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in BPELProcess1.wsdl) -->
+    <receive name="receiveInput" partnerLink="bpelprocess1_client" portType="client:BPELProcess1" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="Assign1">
+      <copy>
+        <from>$inputVariable.payload/ns3:de</from>
+        <to>$Invoke1_insert_DBAdapter.MessagesCollection/ns4:Messages/ns4:de</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns3:para</from>
+        <to>$Invoke1_insert_DBAdapter.MessagesCollection/ns4:Messages/ns4:para</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns3:tipo</from>
+        <to>$Invoke1_insert_DBAdapter.MessagesCollection/ns4:Messages/ns4:tipo</to>
+      </copy>
+    </assign>
+    <invoke name="Invoke1" bpelx:invokeAsDetail="no" partnerLink="DBWriteMje"
+            portType="ns2:DBWriteMje_ptt" operation="insert"
+            inputVariable="Invoke1_insert_DBAdapter"/>
+    <assign name="Assign2">
+      <copy>
+        <from>$inputVariable.payload/ns3:mensaje</from>
+        <to>$Invoke2_Write_FAAdapter.body/ns5:Mensaje/ns5:MENSAJE</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns3:para</from>
+        <to>$Invoke2_Write_FAAdapter.body/ns5:Mensaje/ns5:PARA</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns3:de</from>
+        <to>$Invoke2_Write_FAAdapter.body/ns5:Mensaje/ns5:DE</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns3:tipo</from>
+        <to>$Invoke2_Write_FAAdapter.body/ns5:Mensaje/ns5:TIPO</to>
+      </copy>
+    </assign>
+    <invoke name="Invoke2" bpelx:invokeAsDetail="no" partnerLink="FAMje"
+            portType="ns1:Write_ptt" operation="Write"
+            inputVariable="Invoke2_Write_FAAdapter"/>
+  </sequence>
+</process>

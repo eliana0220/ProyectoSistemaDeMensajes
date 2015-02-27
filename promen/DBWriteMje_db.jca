@@ -1,0 +1,14 @@
+<adapter-config name="DBWriteMje" adapter="Database Adapter" wsdlLocation="DBWriteMje.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/pool" UIConnectionName="ConnectionDB" adapterRef=""/>
+  <endpoint-interaction portType="DBWriteMje_ptt" operation="insert">
+    <interaction-spec className="oracle.tip.adapter.db.DBWriteInteractionSpec">
+      <property name="DescriptorName" value="DBWriteMje.Messages"/>
+      <property name="DmlType" value="insert"/>
+      <property name="MappingsMetaDataURL" value="DBWriteMje-or-mappings.xml"/>
+      <property name="DetectOmissions" value="true"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>
