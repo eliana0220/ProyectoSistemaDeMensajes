@@ -1,0 +1,21 @@
+<?binding.jca guardaBas_db.jca?>
+<wsdl:definitions name="guardaBas" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ApplicationPrueba/promen/guardaBas" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ApplicationPrueba/promen/guardaBas" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/guardaBas">
+    <plt:partnerLinkType name="guardaBas_plt">
+        <plt:role name="guardaBas_role">
+            <plt:portType name="tns:guardaBas_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/guardaBas" schemaLocation="xsd/guardaBas_table.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="MessagesCollection_msg">
+        <wsdl:part name="MessagesCollection" element="top:MessagesCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="guardaBas_ptt">
+        <wsdl:operation name="insert">
+            <wsdl:input message="tns:MessagesCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,14 @@
+<adapter-config name="guardaBas" adapter="Database Adapter" wsdlLocation="guardaBas.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/pool" UIConnectionName="ConnectionColo" adapterRef=""/>
+  <endpoint-interaction portType="guardaBas_ptt" operation="insert">
+    <interaction-spec className="oracle.tip.adapter.db.DBWriteInteractionSpec">
+      <property name="DescriptorName" value="guardaBas.Messages"/>
+      <property name="DmlType" value="insert"/>
+      <property name="MappingsMetaDataURL" value="guardaBas-or-mappings.xml"/>
+      <property name="DetectOmissions" value="true"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

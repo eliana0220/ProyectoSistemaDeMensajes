@@ -7,10 +7,10 @@
   <service name="bpelprocess1_client" ui:wsdlLocation="BPELProcess1.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/ApplicationPrueba/promen/BPELProcess1#wsdl.interface(BPELProcess1)"/>
   </service>
+  <reference name="guardaBas" ui:wsdlLocation="guardaBas.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/ApplicationPrueba/promen/guardaBas#wsdl.interface(guardaBas_ptt)"/>
+  </reference>
   <reference name="FAMje" ui:wsdlLocation="FAMje.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/file/ApplicationPrueba/promen/FAMje#wsdl.interface(Write_ptt)"/>
-  </reference>
-  <reference name="DBWriteMje" ui:wsdlLocation="DBWriteMje.wsdl">
-    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/ApplicationPrueba/promen/DBWriteMje#wsdl.interface(DBWriteMje_ptt)"/>
   </reference>
 </componentType>

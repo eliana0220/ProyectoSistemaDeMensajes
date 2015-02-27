@@ -10,12 +10,12 @@
            xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
            xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy"
            xmlns:ui="http://xmlns.oracle.com/soa/designer/">
-  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ApplicationPrueba/promen/DBWriteMje"
-          location="DBWriteMje.wsdl" importType="wsdl"/>
   <import namespace="http://xmlns.oracle.com/pcbpel/adapter/file/ApplicationPrueba/promen/FAMje"
           location="FAMje.wsdl" importType="wsdl"/>
   <import namespace="http://xmlns.oracle.com/ApplicationPrueba/promen/BPELProcess1"
           location="BPELProcess1.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ApplicationPrueba/promen/guardaBas"
+          location="guardaBas.wsdl" importType="wsdl"/>
   <service name="bpelprocess1_client_ep" ui:wsdlLocation="BPELProcess1.wsdl">
     <interface.wsdl interface="http://xmlns.oracle.com/ApplicationPrueba/promen/BPELProcess1#wsdl.interface(BPELProcess1)"/>
     <binding.ws port="http://xmlns.oracle.com/ApplicationPrueba/promen/BPELProcess1#wsdl.endpoint(bpelprocess1_client_ep/BPELProcess1_pt)"/>
@@ -25,9 +25,14 @@
     <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string"
               many="false">async.persist</property>
   </component>
-  <reference name="DBWriteMje" ui:wsdlLocation="DBWriteMje.wsdl">
-    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/ApplicationPrueba/promen/DBWriteMje#wsdl.interface(DBWriteMje_ptt)"/>
-    <binding.jca config="DBWriteMje_db.jca"/>
+  <reference name="FAMje" ui:wsdlLocation="FAMje.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/file/ApplicationPrueba/promen/FAMje#wsdl.interface(Write_ptt)"/>
+    <binding.jca config="FAMje_file.jca"/>
+    <property name="dir" type="xs:string" many="false" override="may">C:\Users\eliavera\Desktop\Proyectos\Archivos</property>
+  </reference>
+  <reference name="guardaBas" ui:wsdlLocation="guardaBas.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/ApplicationPrueba/promen/guardaBas#wsdl.interface(guardaBas_ptt)"/>
+    <binding.jca config="guardaBas_db.jca"/>
     <property name="jca.retry.count" type="xs:int" many="false" override="may">4</property>
     <property name="jca.retry.interval" type="xs:int" many="false"
               override="may">1</property>
@@ -36,21 +41,16 @@
     <property name="jca.retry.maxInterval" type="xs:string" many="false"
               override="may">120</property>
   </reference>
-  <reference name="FAMje" ui:wsdlLocation="FAMje.wsdl">
-    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/file/ApplicationPrueba/promen/FAMje#wsdl.interface(Write_ptt)"/>
-    <binding.jca config="FAMje_file.jca"/>
-    <property name="dir" type="xs:string" many="false" override="may">C:\Users\eliavera\Desktop\Proyectos\Archivos</property>
-  </reference>
   <wire>
     <source.uri>bpelprocess1_client_ep</source.uri>
     <target.uri>BPELProcess1/bpelprocess1_client</target.uri>
   </wire>
   <wire>
-    <source.uri>BPELProcess1/FAMje</source.uri>
-    <target.uri>FAMje</target.uri>
+    <source.uri>BPELProcess1/guardaBas</source.uri>
+    <target.uri>guardaBas</target.uri>
   </wire>
   <wire>
-    <source.uri>BPELProcess1/DBWriteMje</source.uri>
-    <target.uri>DBWriteMje</target.uri>
+    <source.uri>BPELProcess1/FAMje</source.uri>
+    <target.uri>FAMje</target.uri>
   </wire>
 </composite>

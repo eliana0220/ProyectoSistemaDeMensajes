@@ -21,7 +21,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns:ns3="http://www.everis.com/esquemas"
          xmlns:ns4="http://xmlns.oracle.com/pcbpel/adapter/db/top/DBWriteMje"
-         xmlns:ns5="http://TargetNamespace.com/ServiceName">
+         xmlns:ns5="http://TargetNamespace.com/ServiceName"
+         xmlns:ns6="http://xmlns.oracle.com/pcbpel/adapter/db/ApplicationPrueba/promen/guardaBas"
+         xmlns:ns7="http://xmlns.oracle.com/pcbpel/adapter/db/top/guardaBas">
 
   <import namespace="http://xmlns.oracle.com/ApplicationPrueba/promen/BPELProcess1" location="BPELProcess1.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
   <!-- 
@@ -37,10 +39,10 @@
       with the client role are automatically set using WS-Addressing.
     -->
     <partnerLink name="bpelprocess1_client" partnerLinkType="client:BPELProcess1" myRole="BPELProcess1Provider"/>
+    <partnerLink name="guardaBas" partnerLinkType="ns6:guardaBas_plt"
+                 partnerRole="guardaBas_role"/>
     <partnerLink name="FAMje" partnerLinkType="ns1:Write_plt"
                  partnerRole="Write_role"/>
-    <partnerLink name="DBWriteMje" partnerLinkType="ns2:DBWriteMje_plt"
-                 partnerRole="DBWriteMje_role"/>
   </partnerLinks>
 
   <!-- 
@@ -52,9 +54,9 @@
   <variables>
     <!-- Reference to the message passed as input during initiation -->
     <variable name="inputVariable" messageType="client:BPELProcess1RequestMessage"/>
-    <variable name="Invoke1_insert_DBAdapter"
-              messageType="ns2:MessagesCollection_msg"/>
-    <variable name="Invoke2_Write_FAAdapter" messageType="ns1:Write_msg"/>
+    <variable name="Invoke1_insert_InputVariable"
+              messageType="ns6:MessagesCollection_msg"/>
+    <variable name="Invoke2_Write_InputVariable" messageType="ns1:Write_msg"/>
   </variables>
 
   <!-- 
@@ -71,40 +73,42 @@
     <assign name="Assign1">
       <copy>
         <from>$inputVariable.payload/ns3:de</from>
-        <to>$Invoke1_insert_DBAdapter.MessagesCollection/ns4:Messages/ns4:de</to>
+        <to>$Invoke1_insert_InputVariable.MessagesCollection/ns7:Messages/ns7:de</to>
       </copy>
       <copy>
         <from>$inputVariable.payload/ns3:para</from>
-        <to>$Invoke1_insert_DBAdapter.MessagesCollection/ns4:Messages/ns4:para</to>
+        <to>$Invoke1_insert_InputVariable.MessagesCollection/ns7:Messages/ns7:para</to>
       </copy>
       <copy>
         <from>$inputVariable.payload/ns3:tipo</from>
-        <to>$Invoke1_insert_DBAdapter.MessagesCollection/ns4:Messages/ns4:tipo</to>
+        <to>$Invoke1_insert_InputVariable.MessagesCollection/ns7:Messages/ns7:tipo</to>
       </copy>
     </assign>
-    <invoke name="Invoke1" bpelx:invokeAsDetail="no" partnerLink="DBWriteMje"
-            portType="ns2:DBWriteMje_ptt" operation="insert"
-            inputVariable="Invoke1_insert_DBAdapter"/>
+    <invoke name="Invoke1"
+            inputVariable="Invoke1_insert_InputVariable"
+            partnerLink="guardaBas" portType="ns6:guardaBas_ptt"
+            operation="insert" bpelx:invokeAsDetail="no"/>
     <assign name="Assign2">
       <copy>
-        <from>$inputVariable.payload/ns3:mensaje</from>
-        <to>$Invoke2_Write_FAAdapter.body/ns5:Mensaje/ns5:MENSAJE</to>
-      </copy>
-      <copy>
-        <from>$inputVariable.payload/ns3:para</from>
-        <to>$Invoke2_Write_FAAdapter.body/ns5:Mensaje/ns5:PARA</to>
+        <from>$inputVariable.payload/ns3:tipo</from>
+        <to>$Invoke2_Write_InputVariable.body/ns5:Mensaje/ns5:TIPO</to>
       </copy>
       <copy>
         <from>$inputVariable.payload/ns3:de</from>
-        <to>$Invoke2_Write_FAAdapter.body/ns5:Mensaje/ns5:DE</to>
+        <to>$Invoke2_Write_InputVariable.body/ns5:Mensaje/ns5:DE</to>
       </copy>
       <copy>
-        <from>$inputVariable.payload/ns3:tipo</from>
-        <to>$Invoke2_Write_FAAdapter.body/ns5:Mensaje/ns5:TIPO</to>
+        <from>$inputVariable.payload/ns3:para</from>
+        <to>$Invoke2_Write_InputVariable.body/ns5:Mensaje/ns5:PARA</to>
+      </copy>
+      <copy>
+        <from>$inputVariable.payload/ns3:mensaje</from>
+        <to>$Invoke2_Write_InputVariable.body/ns5:Mensaje/ns5:MENSAJE</to>
       </copy>
     </assign>
-    <invoke name="Invoke2" bpelx:invokeAsDetail="no" partnerLink="FAMje"
+    <invoke name="Invoke2" partnerLink="FAMje"
             portType="ns1:Write_ptt" operation="Write"
-            inputVariable="Invoke2_Write_FAAdapter"/>
+            inputVariable="Invoke2_Write_InputVariable"
+            bpelx:invokeAsDetail="no"/>
   </sequence>
 </process>
