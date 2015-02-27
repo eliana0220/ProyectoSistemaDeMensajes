@@ -3,17 +3,23 @@
             xmlns="http://www.everis.com/esquemas"
             targetNamespace="http://www.everis.com/esquemas"
             elementFormDefault="qualified">
-  <xsd:element name="tipo" type="xsd:string">
-    <xsd:simpleType>
-      <xsd:restriction base="xsd:string">
-        <xsd:enumeration value="whatsapp"/>
-        <xsd:enumeration value="email"/>
-        <xsd:enumeration value="mensaje"/>
-        <xsd:enumeration value="llamada"/>
-      </xsd:restriction>
-    </xsd:simpleType>
+  <xsd:element name="servicio">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="tipo">
+          <xsd:simpleType>
+            <xsd:restriction base="xsd:string">
+              <xsd:enumeration value="whatsapp"/>
+              <xsd:enumeration value="email"/>
+              <xsd:enumeration value="mensaje"/>
+              <xsd:enumeration value="llamada"/>
+            </xsd:restriction>
+          </xsd:simpleType>
+        </xsd:element>
+        <xsd:element name="de" type="xsd:string"/>
+        <xsd:element name="para" type="xsd:string"/>
+        <xsd:element name="mensaje" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
   </xsd:element>
-  <xsd:element name="de" type="xsd:string"/>
-  <xsd:element name="para" type="xsd:string"/>
-  <xsd:element name="mensaje" type="xsd:string"/>
 </xsd:schema>
