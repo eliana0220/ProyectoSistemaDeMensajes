@@ -1,0 +1,28 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="mensajeBPEL"
+     targetNamespace="http://xmlns.oracle.com/AplicacionGeneral/promen/mensajeBPEL"
+     xmlns:ns1="http://www.everis.com/esquemas"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:client="http://xmlns.oracle.com/AplicacionGeneral/promen/mensajeBPEL"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    >
+    <plnk:partnerLinkType name="mensajeBPEL">
+        <plnk:role name="mensajeBPELProvider" portType="client:mensajeBPEL"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ns1="http://www.everis.com/esquemas"
+             xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:client="http://xmlns.oracle.com/AplicacionGeneral/promen/mensajeBPEL"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <import namespace="http://www.everis.com/esquemas" schemaLocation="xsd/esquemas.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="mensajeBPELRequestMessage">
+        <wsdl:part name="payload" element="ns1:servicio"/>
+    </wsdl:message>
+    <wsdl:portType name="mensajeBPEL">
+        <wsdl:operation name="process">
+            <wsdl:input message="client:mensajeBPELRequestMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

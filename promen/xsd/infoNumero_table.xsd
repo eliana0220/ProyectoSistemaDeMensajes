@@ -1,0 +1,27 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/infoNumero" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/infoNumero" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="NumerosCollection" type="NumerosCollection"/>
+   <xs:complexType name="NumerosCollection">
+      <xs:sequence>
+         <xs:element name="Numeros" type="Numeros" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="Numeros">
+      <xs:sequence>
+         <xs:element name="name" type="xs:string" minOccurs="0" nillable="true"/>
+         <xs:element name="numero">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="50"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="infoNumeroSelect_paramInputParameters" type="infoNumeroSelect_param"/>
+   <xs:complexType name="infoNumeroSelect_param">
+      <xs:sequence>
+         <xs:element name="param" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

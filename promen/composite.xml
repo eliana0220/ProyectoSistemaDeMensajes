@@ -10,4 +10,185 @@
            xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
            xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy"
            xmlns:ui="http://xmlns.oracle.com/soa/designer/">
+  <import namespace="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMensajeService"
+          location="getInfoMensajeService.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/AplicacionGeneral/promen/infoMensajes"
+          location="infoMensajes.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/AplicacionGeneral/promen/infoMail"
+          location="infoMail.wsdl" importType="wsdl"/>
+  <import namespace="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMailService"
+          location="getInfoMailService.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/AplicacionGeneral/promen/infoNumero"
+          location="infoNumero.wsdl" importType="wsdl"/>
+  <import namespace="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoNumeroService"
+          location="getInfoNumeroService.wsdl" importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/AplicacionGeneral/promen/mensajeBPEL"
+          location="mensajeBPEL.wsdl" importType="wsdl"/>
+  <import namespace="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMensajeService"
+          location="http://BUE-865950A-3.usersad.everis.int:7001/soa-infra/services/default/promen/getInfoMensajeService.wsdl"
+          importType="wsdl"/>
+  <import namespace="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMensajeService"
+          location="getInfoMensajeServiceWrapper.wsdl" importType="wsdl"/>
+  <import namespace="http://schemas.oracle.com/events/edl/EventoMensaje"
+          location="EventoMensaje.edl" importType="edl"/>
+  <import namespace="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMailService"
+          location="http://BUE-865950A-3.usersad.everis.int:7001/soa-infra/services/default/promen/getInfoMailService.wsdl"
+          importType="wsdl"/>
+  <import namespace="http://xmlns.oracle.com/AplicacionGeneral/promen/BPELMail"
+          location="BPELMail.wsdl" importType="wsdl"/>
+  <import namespace="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMailService"
+          location="getInfoMailServiceWrapper.wsdl" importType="wsdl"/>
+  <import namespace="http://schemas.oracle.com/events/edl/EventoMail"
+          location="EventoMail.edl" importType="edl"/>
+  <service name="getInfoMensajeService"
+           ui:wsdlLocation="getInfoMensajeService.wsdl">
+    <interface.wsdl interface="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMensajeService#wsdl.interface(getInfoMensaje_ptt)"/>
+    <binding.ws port="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMensajeService#wsdl.endpoint(getInfoMensajeService/getInfoMensaje_pt)">
+      <property name="weblogic.wsee.wsat.transaction.flowOption"
+                type="xs:string" many="false">NEVER</property>
+    </binding.ws>
+  </service>
+  <service name="getInfoMailService" ui:wsdlLocation="getInfoMailService.wsdl">
+    <interface.wsdl interface="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMailService#wsdl.interface(getInfoMail_ptt)"/>
+    <binding.ws port="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMailService#wsdl.endpoint(getInfoMailService/getInfoMail_pt)">
+      <property name="weblogic.wsee.wsat.transaction.flowOption"
+                type="xs:string" many="false">NEVER</property>
+    </binding.ws>
+  </service>
+  <service name="getInfoNumeroService"
+           ui:wsdlLocation="getInfoNumeroService.wsdl">
+    <interface.wsdl interface="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoNumeroService#wsdl.interface(getInfoNumero_ptt)"/>
+    <binding.ws port="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoNumeroService#wsdl.endpoint(getInfoNumeroService/getInfoNumero_pt)">
+      <property name="weblogic.wsee.wsat.transaction.flowOption"
+                type="xs:string" many="false">NEVER</property>
+    </binding.ws>
+  </service>
+  <service name="mensajebpel_client_ep" ui:wsdlLocation="mensajeBPEL.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/AplicacionGeneral/promen/mensajeBPEL#wsdl.interface(mensajeBPEL)"/>
+    <binding.ws port="http://xmlns.oracle.com/AplicacionGeneral/promen/mensajeBPEL#wsdl.endpoint(mensajebpel_client_ep/mensajeBPEL_pt)"/>
+  </service>
+  <service name="bpelmail_client_ep" ui:wsdlLocation="BPELMail.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/AplicacionGeneral/promen/BPELMail#wsdl.interface(BPELMail)"/>
+    <binding.ws port="http://xmlns.oracle.com/AplicacionGeneral/promen/BPELMail#wsdl.endpoint(bpelmail_client_ep/BPELMail_pt)"/>
+  </service>
+  <component name="Mediator">
+    <implementation.mediator src="Mediator.mplan"/>
+  </component>
+  <component name="MediatorMail">
+    <implementation.mediator src="MediatorMail.mplan"/>
+  </component>
+  <component name="MediatorNumero">
+    <implementation.mediator src="MediatorNumero.mplan"/>
+  </component>
+  <component name="mensajeBPEL" version="2.0">
+    <implementation.bpel src="mensajeBPEL.bpel"/>
+    <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string"
+              many="false">async.persist</property>
+    <business-events>
+      <publishes xmlns:pub1="http://schemas.oracle.com/events/edl/EventoMensaje"
+                 name="pub1:EventMensaje"/>
+    </business-events>
+  </component>
+  <component name="BPELMail" version="2.0">
+    <implementation.bpel src="BPELMail.bpel"/>
+    <property name="bpel.config.oneWayDeliveryPolicy" type="xs:string"
+              many="false">async.persist</property>
+    <business-events>
+      <publishes xmlns:pub1="http://schemas.oracle.com/events/edl/EventoMail"
+                 name="pub1:EventoMail"/>
+    </business-events>
+  </component>
+  <reference name="infoMensajes" ui:wsdlLocation="infoMensajes.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/AplicacionGeneral/promen/infoMensajes#wsdl.interface(infoMensajes_ptt)"/>
+    <binding.jca config="infoMensajes_db.jca"/>
+    <property name="jca.retry.count" type="xs:int" many="false" override="may">4</property>
+    <property name="jca.retry.interval" type="xs:int" many="false"
+              override="may">1</property>
+    <property name="jca.retry.backoff" type="xs:int" many="false"
+              override="may">2</property>
+    <property name="jca.retry.maxInterval" type="xs:string" many="false"
+              override="may">120</property>
+  </reference>
+  <reference name="infoMail" ui:wsdlLocation="infoMail.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/AplicacionGeneral/promen/infoMail#wsdl.interface(infoMail_ptt)"/>
+    <binding.jca config="infoMail_db.jca"/>
+    <property name="jca.retry.count" type="xs:int" many="false" override="may">4</property>
+    <property name="jca.retry.interval" type="xs:int" many="false"
+              override="may">1</property>
+    <property name="jca.retry.backoff" type="xs:int" many="false"
+              override="may">2</property>
+    <property name="jca.retry.maxInterval" type="xs:string" many="false"
+              override="may">120</property>
+  </reference>
+  <reference name="infoNumero" ui:wsdlLocation="infoNumero.wsdl">
+    <interface.wsdl interface="http://xmlns.oracle.com/pcbpel/adapter/db/AplicacionGeneral/promen/infoNumero#wsdl.interface(infoNumero_ptt)"/>
+    <binding.jca config="infoNumero_db.jca"/>
+    <property name="jca.retry.count" type="xs:int" many="false" override="may">4</property>
+    <property name="jca.retry.interval" type="xs:int" many="false"
+              override="may">1</property>
+    <property name="jca.retry.backoff" type="xs:int" many="false"
+              override="may">2</property>
+    <property name="jca.retry.maxInterval" type="xs:string" many="false"
+              override="may">120</property>
+  </reference>
+  <reference name="mensaje"
+             ui:wsdlLocation="http://BUE-865950A-3.usersad.everis.int:7001/soa-infra/services/default/promen/getInfoMensajeService.wsdl">
+    <interface.wsdl interface="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMensajeService#wsdl.interface(getInfoMensaje_ptt)"/>
+    <binding.ws port="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMensajeService#wsdl.endpoint(getInfoMensajeService/getInfoMensaje_pt)"
+                location="http://bue-865950a-3.usersad.everis.int:7001/soa-infra/services/default/promen/getInfoMensajeService?WSDL"
+                soapVersion="1.1">
+      <property name="weblogic.wsee.wsat.transaction.flowOption"
+                type="xs:string" many="false">WSDLDriven</property>
+    </binding.ws>
+  </reference>
+  <reference name="ServiceMail"
+             ui:wsdlLocation="http://BUE-865950A-3.usersad.everis.int:7001/soa-infra/services/default/promen/getInfoMailService.wsdl">
+    <interface.wsdl interface="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMailService#wsdl.interface(getInfoMail_ptt)"/>
+    <binding.ws port="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMailService#wsdl.endpoint(getInfoMailService/getInfoMail_pt)"
+                location="http://bue-865950a-3.usersad.everis.int:7001/soa-infra/services/default/promen/getInfoMailService?WSDL"
+                soapVersion="1.1">
+      <property name="weblogic.wsee.wsat.transaction.flowOption"
+                type="xs:string" many="false">WSDLDriven</property>
+    </binding.ws>
+  </reference>
+  <wire>
+    <source.uri>getInfoMensajeService</source.uri>
+    <target.uri>Mediator/Mediator</target.uri>
+  </wire>
+  <wire>
+    <source.uri>Mediator/infoMensajes</source.uri>
+    <target.uri>infoMensajes</target.uri>
+  </wire>
+  <wire>
+    <source.uri>getInfoMailService</source.uri>
+    <target.uri>MediatorMail/MediatorMail</target.uri>
+  </wire>
+  <wire>
+    <source.uri>MediatorMail/infoMail</source.uri>
+    <target.uri>infoMail</target.uri>
+  </wire>
+  <wire>
+    <source.uri>getInfoNumeroService</source.uri>
+    <target.uri>MediatorNumero/MediatorNumero</target.uri>
+  </wire>
+  <wire>
+    <source.uri>MediatorNumero/infoNumero</source.uri>
+    <target.uri>infoNumero</target.uri>
+  </wire>
+  <wire>
+    <source.uri>mensajebpel_client_ep</source.uri>
+    <target.uri>mensajeBPEL/mensajebpel_client</target.uri>
+  </wire>
+  <wire>
+    <source.uri>mensajeBPEL/mensaje</source.uri>
+    <target.uri>mensaje</target.uri>
+  </wire>
+  <wire>
+    <source.uri>bpelmail_client_ep</source.uri>
+    <target.uri>BPELMail/bpelmail_client</target.uri>
+  </wire>
+  <wire>
+    <source.uri>BPELMail/ServiceMail</source.uri>
+    <target.uri>ServiceMail</target.uri>
+  </wire>
 </composite>

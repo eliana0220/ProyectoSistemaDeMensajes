@@ -1,0 +1,14 @@
+<adapter-config name="infoMail" adapter="Database Adapter" wsdlLocation="infoMail.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/pool" UIConnectionName="Connection" adapterRef=""/>
+  <endpoint-interaction portType="infoMail_ptt" operation="infoMailSelect">
+    <interaction-spec className="oracle.tip.adapter.db.DBReadInteractionSpec">
+      <property name="DescriptorName" value="infoMail.Mails"/>
+      <property name="QueryName" value="infoMailSelect"/>
+      <property name="MappingsMetaDataURL" value="infoMail-or-mappings.xml"/>
+      <property name="ReturnSingleResultSet" value="false"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

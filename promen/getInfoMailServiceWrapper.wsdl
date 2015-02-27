@@ -1,0 +1,16 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="getInfoMailService"
+     targetNamespace="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMailService"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:tns="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMailService"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    >
+    <plnk:partnerLinkType name="ServiceMail">
+        <plnk:role name="getInfoMail_ptt" portType="tns:getInfoMail_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMailService"
+         location="http://BUE-865950A-3.usersad.everis.int:7001/soa-infra/services/default/promen/getInfoMailService.wsdl"/>
+</wsdl:definitions>

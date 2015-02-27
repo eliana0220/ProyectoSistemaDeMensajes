@@ -1,0 +1,25 @@
+<?binding.jca infoNumero_db.jca?>
+<wsdl:definitions name="infoNumero" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/AplicacionGeneral/promen/infoNumero" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/AplicacionGeneral/promen/infoNumero" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/infoNumero">
+    <plt:partnerLinkType name="infoNumero_plt">
+        <plt:role name="infoNumero_role">
+            <plt:portType name="tns:infoNumero_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/infoNumero" schemaLocation="xsd/infoNumero_table.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="infoNumeroSelect_inputParameters">
+        <wsdl:part name="infoNumeroSelect_inputParameters" element="top:infoNumeroSelect_paramInputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="NumerosCollection_msg">
+        <wsdl:part name="NumerosCollection" element="top:NumerosCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="infoNumero_ptt">
+        <wsdl:operation name="infoNumeroSelect">
+            <wsdl:input message="tns:infoNumeroSelect_inputParameters"/>
+            <wsdl:output message="tns:NumerosCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

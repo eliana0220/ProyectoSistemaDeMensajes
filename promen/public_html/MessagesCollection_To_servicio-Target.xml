@@ -1,0 +1,6 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<inp1:servicio xmlns:inp1="http://www.everis.com/esquemas">
+   <inp1:tipo>string5</inp1:tipo>
+   <inp1:de>string1</inp1:de>
+   <inp1:para>string3</inp1:para>
+</inp1:servicio>

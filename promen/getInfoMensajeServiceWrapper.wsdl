@@ -1,0 +1,16 @@
+<?xml version= '1.0' encoding= 'UTF-8' ?>
+<wsdl:definitions
+     name="getInfoMensajeService"
+     targetNamespace="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMensajeService"
+     xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype"
+     xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+     xmlns:tns="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMensajeService"
+     xmlns:bpws="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    >
+    <plnk:partnerLinkType name="mensaje">
+        <plnk:role name="getInfoMensaje_ptt" portType="tns:getInfoMensaje_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:import namespace="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMensajeService"
+         location="http://BUE-865950A-3.usersad.everis.int:7001/soa-infra/services/default/promen/getInfoMensajeService.wsdl"/>
+</wsdl:definitions>

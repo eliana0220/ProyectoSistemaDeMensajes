@@ -1,0 +1,15 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="MAILS.NAME:db_column_not_null">false</entry>
+   <entry key="MAILS.EMAIL:db_column_size">50</entry>
+   <entry key="MAILS:db_column_1">EMAIL</entry>
+   <entry key="MAILS:db_column_0">NAME</entry>
+   <entry key="return_single_result_set">false</entry>
+   <entry key="MAILS.NAME:db_column_type">VARCHAR2</entry>
+   <entry key="MAILS.EMAIL:db_column_not_null">true</entry>
+   <entry key="root_descriptor_alias">MAILS</entry>
+   <entry key="MAILS:db_table_type">TABLE</entry>
+   <entry key="MAILS.NAME:db_column_size">40</entry>
+   <entry key="MAILS.EMAIL:db_column_type">VARCHAR2</entry>
+</properties>

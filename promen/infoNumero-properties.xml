@@ -1,0 +1,15 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="NUMEROS.NUMERO:db_column_not_null">true</entry>
+   <entry key="NUMEROS.NUMERO:db_column_type">VARCHAR2</entry>
+   <entry key="NUMEROS.NAME:db_column_type">VARCHAR2</entry>
+   <entry key="NUMEROS:db_table_type">TABLE</entry>
+   <entry key="return_single_result_set">false</entry>
+   <entry key="NUMEROS:db_column_1">NUMERO</entry>
+   <entry key="NUMEROS:db_column_0">NAME</entry>
+   <entry key="NUMEROS.NUMERO:db_column_size">50</entry>
+   <entry key="root_descriptor_alias">NUMEROS</entry>
+   <entry key="NUMEROS.NAME:db_column_size">40</entry>
+   <entry key="NUMEROS.NAME:db_column_not_null">false</entry>
+</properties>

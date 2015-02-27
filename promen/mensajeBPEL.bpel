@@ -1,0 +1,90 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  Oracle JDeveloper BPEL Designer 
+  
+  Created: Fri Feb 27 12:50:30 ART 2015
+  Author:  nohidalg
+  Type: BPEL 2.0 Process
+  Purpose: One Way BPEL Process
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<process name="mensajeBPEL"
+               targetNamespace="http://xmlns.oracle.com/AplicacionGeneral/promen/mensajeBPEL"
+               xmlns="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+               xmlns:client="http://xmlns.oracle.com/AplicacionGeneral/promen/mensajeBPEL"
+               xmlns:ora="http://schemas.oracle.com/xpath/extension"
+               xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+         xmlns:ns1="http://oracle.com/sca/soapservice/AplicacionGeneral/promen/getInfoMensajeService"
+         xmlns:bpelx="http://schemas.oracle.com/bpel/extension"
+         xmlns:ns2="http://www.everis.com/esquemas"
+         xmlns:ns3="http://schemas.oracle.com/events/edl/EventoMensaje">
+  <import namespace="http://www.everis.com/esquemas" location="xsd/esquemas.xsd"
+          importType="http://www.w3.org/2001/XMLSchema"/>
+  <import namespace="http://xmlns.oracle.com/AplicacionGeneral/promen/mensajeBPEL" location="mensajeBPEL.wsdl" importType="http://schemas.xmlsoap.org/wsdl/"/>
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      PARTNERLINKS                                                      
+      List of services participating in this BPEL process               
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  --> 
+  <partnerLinks>
+    <!-- 
+      The 'client' role represents the requester of this service. It is 
+      used for callback. The location and correlation information associated
+      with the client role are automatically set using WS-Addressing.
+    -->
+    <partnerLink name="mensajebpel_client" partnerLinkType="client:mensajeBPEL" myRole="mensajeBPELProvider"/>
+    <partnerLink name="mensaje" partnerLinkType="ns1:mensaje"
+                 partnerRole="getInfoMensaje_ptt"/>
+  </partnerLinks>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      VARIABLES                                                        
+      List of messages and XML documents used within this BPEL process 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <variables>
+    <!-- Reference to the message passed as input during initiation -->
+    <variable name="inputVariable" messageType="client:mensajeBPELRequestMessage"/>
+    <variable name="mensaje_getInfoMensaje_InputVariable"
+              messageType="ns1:requestMessage"/>
+    <variable name="mensaje_getInfoMensaje_OutputVariable"
+              messageType="ns1:replyMessage"/>
+    <variable name="eventoInvoke_InputVariable" element="ns2:servicio"/>
+  </variables>
+
+  <!-- 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     ORCHESTRATION LOGIC                                               
+     Set of activities coordinating the flow of messages across the    
+     services integrated within this business process                  
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  -->
+  <sequence name="main">
+
+    <!-- Receive input from requestor. (Note: This maps to operation defined in mensajeBPEL.wsdl) -->
+    <receive name="receiveInput" partnerLink="mensajebpel_client" portType="client:mensajeBPEL" operation="process" variable="inputVariable" createInstance="yes"/>
+    <assign name="entradaMensajeAssign">
+      <copy>
+        <from>$inputVariable.payload</from>
+        <to>$mensaje_getInfoMensaje_InputVariable.part1</to>
+      </copy>
+    </assign>
+    <invoke name="mensaje" bpelx:invokeAsDetail="no" partnerLink="mensaje"
+            portType="ns1:getInfoMensaje_ptt" operation="getInfoMensaje"
+            inputVariable="mensaje_getInfoMensaje_InputVariable"
+            outputVariable="mensaje_getInfoMensaje_OutputVariable"/>
+    <assign name="eventoAssign">
+      <copy>
+        <from>$mensaje_getInfoMensaje_OutputVariable.part1</from>
+        <to>$eventoInvoke_InputVariable</to>
+      </copy>
+    </assign>
+    <invoke name="eventoInvoke"
+            bpelx:eventName="ns3:EventMensaje"
+            inputVariable="eventoInvoke_InputVariable"
+            bpelx:invokeAsDetail="no"/>
+  </sequence>
+</process>

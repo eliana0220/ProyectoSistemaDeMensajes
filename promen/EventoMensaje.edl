@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://schemas.oracle.com/events/edl" targetNamespace="http://schemas.oracle.com/events/edl/EventoMensaje">
+    <schema-import namespace="http://www.everis.com/esquemas" location="xsd/esquemas.xsd"/>
+    <event-definition name="EventMensaje">
+        <content xmlns:ns0="http://www.everis.com/esquemas" element="ns0:servicio"/>
+    </event-definition>
+</definitions>

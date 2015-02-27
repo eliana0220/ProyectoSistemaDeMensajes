@@ -1,5 +1,10 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <jpr:project xmlns:jpr="http://xmlns.oracle.com/ide/project">
+   <url n="BPELMail_bpelFileURL" path="BPELMail.bpel"/>
+   <value n="BPELMail_Namespace" v="http://xmlns.oracle.com/AplicacionGeneral/promen/BPELMail"/>
+   <value n="BPELMail_ProcessName" v="BPELMail"/>
+   <value n="BPELMail_Template" v="BPEL_ONE_WAY_PROCESS"/>
+   <value n="BPELMail_wsdl" v="BPELMail.wsdl"/>
    <hash n="component-versions">
       <value n="oracle.adfdt.controller.adfc.source.migration.AdfControllerSchemaMigrator" v="11.1.1.1.0"/>
       <value n="oracle.adfdt.controller.common.migrator.ProjectMigrator" v="11.1.1.1.0"/>
@@ -61,6 +66,12 @@
       <string v="oracle.bpm.fusion.repository.BPMProjectSettings/bpmProjectsProcessesContentSet"/>
    </list>
    <value n="defaultPackage" v="promen"/>
+   <url n="mensajeBPEL_bpelFileURL" path="mensajeBPEL.bpel"/>
+   <value n="mensajeBPEL_Namespace" v="http://xmlns.oracle.com/AplicacionGeneral/promen/mensajeBPEL"/>
+   <value n="mensajeBPEL_ProcessName" v="mensajeBPEL"/>
+   <value n="mensajeBPEL_Template" v="BPEL_ONE_WAY_PROCESS"/>
+   <value n="mensajeBPEL_wsdl" v="mensajeBPEL.wsdl"/>
+   <value n="Namespace" v="http://xmlns.oracle.com/AplicacionGeneral/promen/BPELMail"/>
    <hash n="oracle.ide.model.ResourcePaths">
       <hash n="resourcesContentSet">
          <list n="url-path"/>
@@ -354,4 +365,11 @@
          </list>
       </hash>
    </hash>
+   <value n="ProcessName" v="BPELMail"/>
+   <url n="sistemaMensajesBPELProcess_bpelFileURL" path="sistemaMensajesBPELProcess.bpel"/>
+   <value n="sistemaMensajesBPELProcess_Namespace" v="http://xmlns.oracle.com/AplicacionGeneral/promen/sistemaMensajesBPELProcess"/>
+   <value n="sistemaMensajesBPELProcess_ProcessName" v="sistemaMensajesBPELProcess"/>
+   <value n="sistemaMensajesBPELProcess_Template" v="BPEL_ONE_WAY_PROCESS"/>
+   <value n="sistemaMensajesBPELProcess_wsdl" v="sistemaMensajesBPELProcess.wsdl"/>
+   <value n="Template" v="BPEL_ONE_WAY_PROCESS"/>
 </jpr:project>

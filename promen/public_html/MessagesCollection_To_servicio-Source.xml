@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<MessagesCollection xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/infoMensajes">
+   <Messages>
+      <de>string1</de>
+      <para>string3</para>
+      <tipo>string5</tipo>
+   </Messages>
+   <Messages>
+      <de>string7</de>
+      <para>string9</para>
+      <tipo>string11</tipo>
+   </Messages>
+   <Messages>
+      <de>string13</de>
+      <para>string15</para>
+      <tipo>string17</tipo>
+   </Messages>
+</MessagesCollection>
